@@ -64,20 +64,17 @@ void sim(int* max_steps, double* sim_length) {
 
 void celestials(celestials_settings* cs) {
   while (1) {
-    char* options[3];
+    char* options[2];
     asprintf(&options[0], "fixed body index: %i", cs->fixed_body);
-    asprintf(&options[1], "reference body index: %i", cs->reference_body);
-    options[2] = "confirm";
+    options[1] = "confirm";
 
-    int selected = selecto(options, 3);
+    int selected = selecto(options, 2);
 
     switch (selected) {
       case(0): inputui("fixed body index: ", &cs->fixed_body); break;
-      case(1): inputui("reference body index: ", &cs->reference_body); break;
-      case(2): return;
+      case(1): return;
     }
 
     free(options[0]);
-    free(options[1]);
   }
 }
