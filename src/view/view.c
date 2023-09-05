@@ -5,7 +5,7 @@ void render(settings s, celestials_settings cs) {
   int screen_radius = s.screen_size / 2;
   celestial* c = cs.celestials;
 
-  for (int i = 0; i < s.screen_size; i++) {
+  for (int i = 0; i < s.num_steps; i++) {
     for (int j = 0; j < cs.num_celestials; j++) {
       worldtod(c[j].coordinates[i], s.zoom, screen_radius);
     }
