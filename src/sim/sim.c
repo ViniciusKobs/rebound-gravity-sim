@@ -1,6 +1,5 @@
 #include <rebound.h>
 #include "sim.h"
-#include <curses.h>
 
 typedef struct reb_simulation reb_simulation;
 

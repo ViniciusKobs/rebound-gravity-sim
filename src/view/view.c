@@ -1,5 +1,4 @@
 #include "view.h"
-#include <curses.h>
 
 vec3 colors[] = {
   {0, 0, 255},

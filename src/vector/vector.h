@@ -1,6 +1,7 @@
 #pragma once
 
 typedef double vec3[3];
+typedef int vec2i[2];
 enum axis {x, y, z};
 
 void vec3cpy(vec3 v1, vec3 v2);
