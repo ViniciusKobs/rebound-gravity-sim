@@ -1,23 +1,25 @@
 #include "tui.h"
 
-int menu(settings* s, celestials_settings* cs) {
+int menu(settings* s, celestials_settings* cs, int* pre_sim) {
   while (1) {
-    char* options[5] = {
+    char* options[6] = {
       "start",
+      "pre-simulate",
       "configure screen",
       "configure celestials",
       "configure simulation",
       "quit",
     };
 
-    int selected = selecto(options, 5);
+    int selected = selecto(options, 6);
 
     switch (selected) {
       case 0: return 0;
-      case 1: screen(&s->screen_size, &s->zoom); break;
-      case 2: celestials(cs); break;
-      case 3: sim(&s->max_steps, &s->sim_length); break;
-      case 4: return 1;
+      case 1: presim(pre_sim); return 0;
+      case 2: screen(&s->screen_size, &s->zoom); break;
+      case 3: celestials(cs); break;
+      case 4: sim(&s->max_steps, &s->step_interval, &s->sim_length); break;
+      case 5: return 1;
     }
   }
 }
@@ -42,23 +44,26 @@ void screen(int* screen_size, double* zoom) {
   }
 }
 
-void sim(int* max_steps, double* sim_length) {
+void sim(int* max_steps, int* step_interval, double* sim_length) {
   while (1) {
-    char* options[3];
+    char* options[4];
     asprintf(&options[0], "max steps: %i", *max_steps);
-    asprintf(&options[1], "sim length: %f", *sim_length);
-    options[2] = "confirm";
+    asprintf(&options[1], "step interval: %i", *step_interval);
+    asprintf(&options[2], "sim length: %f", *sim_length);
+    options[3] = "confirm";
 
-    int selected = selecto(options, 3);
+    int selected = selecto(options, 4);
 
     switch (selected) {
-      case(0): inputui("time step in seconds: ", max_steps); break;
-      case(1): inputd("sim length in steps: ", sim_length); break;
-      case(2): return;
+      case(0): inputui("max steps: ", max_steps); break;
+      case(1): inputui("step interval: ", step_interval); break;
+      case(2): inputd("sim length in steps: ", sim_length); break;
+      case(3): return;
     }
 
     free(options[0]);
     free(options[1]);
+    free(options[2]);
   }
 }
 
@@ -77,4 +82,8 @@ void celestials(celestials_settings* cs) {
 
     free(options[0]);
   }
+}
+
+void presim(int* pre_sim) {
+  *pre_sim = 1;
 }

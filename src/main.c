@@ -1,16 +1,16 @@
+#include <curses.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "settings.h"
 #include "tui/tui.h"
 #include "space/universe.h"
-#include "space/celestials.h"
 #include "sim/sim.h"
 #include "view/view.h"
 
 void info(settings s, celestials_settings cs, int t);
 
 int main() {
-  settings s = {1000, .8, 50000, 2*PI, 0, 0};
+  settings s = {1000, .8, 2500, 1, 2*PI, 0, 0};
   celestials_settings cs = {3, NULL, 0, 0, 1};
 
   celestial* c = malloc(sizeof (celestial) * cs.num_celestials);
@@ -27,22 +27,38 @@ int main() {
   cbreak();
 
   int quit = 0;
+  int pre_sim = 0;
   while(!quit) {
-    quit = menu(&s, &cs);
+    quit = menu(&s, &cs, &pre_sim);
     if (quit) break;
 
-    for (int i = 0; i < cs.num_celestials; i++) {
-      c[i].coordinates = malloc(sizeof (vec3) * s.max_steps);
-    }
+    if (pre_sim) {
+      clear();
+      simulate(&s, &cs, 1);
+      printw("-> continue");
+      refresh();
 
-    simulate(&s, &cs);
+      flushinp();
+      int key = 0;
+      while(key != 10) {
+        key = getch();
+      }
+      
+      pre_sim = 0;
+    } else {
+      for (int i = 0; i < cs.num_celestials; i++) {
+        c[i].coordinates = malloc(sizeof (vec3) * s.max_steps);
+      }
 
-    // info(s, cs, 100);
+      clear();
+      simulate(&s, &cs, 0);
+      refresh();
 
-    render(s, cs);
+      render(s, cs);
 
-    for (int i = 0; i < cs.num_celestials; i++) {
-      free(c[i].coordinates);
+      for (int i = 0; i < cs.num_celestials; i++) {
+        free(c[i].coordinates);
+      }
     }
   }
 

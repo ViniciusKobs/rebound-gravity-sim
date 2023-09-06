@@ -1,6 +1,7 @@
 #include "tui.h"
 
 int selecto(char** options, int num_options) {
+  flushinp();
   noecho();
   int selected = 0;
   int key;
