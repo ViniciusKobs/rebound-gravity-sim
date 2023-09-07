@@ -69,18 +69,36 @@ void sim(int* max_steps, int* step_interval, double* sim_length) {
 
 void celestials(celestials_settings* cs) {
   while (1) {
-    char* options[2];
-    asprintf(&options[0], "fixed body index: %i", cs->fixed_body);
-    options[1] = "confirm";
+    char* options[8];
+    asprintf(&options[0], "fixed body index: %i\n", cs->fixed_body);
+    asprintf(&options[1], "ship x coordinate: %f", cs->celestials[2].initial_coordinates[x]);
+    asprintf(&options[2], "ship y coordinate: %f", cs->celestials[2].initial_coordinates[y]);
+    asprintf(&options[3], "ship z coordinate: %f", cs->celestials[2].initial_coordinates[z]);
+    asprintf(&options[4], "ship x velocity: %f", cs->celestials[2].initial_velocity[x]);
+    asprintf(&options[5], "ship y velocity: %f", cs->celestials[2].initial_velocity[y]);
+    asprintf(&options[6], "ship z velocity: %f", cs->celestials[2].initial_velocity[z]);
+    options[7] = "confirm";
 
-    int selected = selecto(options, 2);
+    int selected = selecto(options, 8);
 
     switch (selected) {
       case(0): inputui("fixed body index: ", &cs->fixed_body); break;
-      case(1): return;
+      case(1): inputd("ship x coordinates: ", &cs->celestials[2].initial_coordinates[x]); break;
+      case(2): inputd("ship y coordinates: ", &cs->celestials[2].initial_coordinates[y]); break;
+      case(3): inputd("ship z coordinates: ", &cs->celestials[2].initial_coordinates[z]); break;
+      case(4): inputd("ship x velocity: ", &cs->celestials[2].initial_velocity[x]); break;
+      case(5): inputd("ship y velocity: ", &cs->celestials[2].initial_velocity[y]); break;
+      case(6): inputd("ship z velocity: ", &cs->celestials[2].initial_velocity[z]); break;
+      case(7): return;
     }
 
     free(options[0]);
+    free(options[1]);
+    free(options[2]);
+    free(options[3]);
+    free(options[4]);
+    free(options[5]);
+    free(options[6]);
   }
 }
 

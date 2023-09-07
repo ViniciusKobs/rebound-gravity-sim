@@ -16,8 +16,8 @@ int main() {
   celestial* c = malloc(sizeof (celestial) * cs.num_celestials);
   c[0] = (celestial) {5.972E24, 6371E3, {0}, {0}, NULL, NULL};
   c[1] = (celestial) {7.347E22, 1734E3, {0}, {0}, NULL, NULL};
-  c[2] = (celestial) {0, 50, {0, -(6371E3 + 300E3), 0}, {10909, 0, 0}, NULL};
-  orbit moon = {384748E3, 0.054, 0, 0, 0, .5};
+  c[2] = (celestial) {0, 50, {0, -(6371E3 + 300E3), 0}, {10909, 0, 1000}, NULL};
+  orbit moon = {384748E3, 0.054, 15, 10, 0, .5};
   c[1].initial_orbit = &moon;
 
   cs.celestials = c;

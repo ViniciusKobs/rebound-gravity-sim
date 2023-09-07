@@ -62,7 +62,7 @@ void add_particles(reb_simulation* r, celestials_settings* cs) {
     if (c[i].initial_orbit == NULL) {
       double px = c[i].initial_coordinates[x] / scale; double py = c[i].initial_coordinates[y] / scale; double pz = c[i].initial_coordinates[z] / scale;
       double vx = c[i].initial_velocity[x] * (time_scale / scale); double vy = c[i].initial_velocity[y] * (time_scale / scale); double vz = c[i].initial_velocity[z] * (time_scale / scale);
-      reb_add_fmt(r, "m x y z vx vy xz", m, px, py, pz, vx, vy, vz);
+      reb_add_fmt(r, "m x y z vx vy vz", m, px, py, pz, vx, vy, vz);
     } else {
       double a = c[i].initial_orbit->a / scale;
       double e = c[i].initial_orbit->e;
